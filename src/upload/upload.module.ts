@@ -1,20 +1,21 @@
 import { BadRequestException, Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
+import { v4 as uuidv4 } from 'uuid';
+import { Upload } from './entities/upload.entity';
 import { UploadController } from './upload.controller';
 import { UploadService } from './upload.service';
-import { MulterModule } from '@nestjs/platform-express';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { diskStorage } from 'multer';
-import { v4 as uuidv4 } from 'uuid';
-import { extname } from 'path';
-import { Upload } from './entities/upload.entity';
+import { I18nService } from 'nestjs-i18n';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Upload]),
     MulterModule.registerAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
+      useFactory: async (i18n: I18nService) => ({
         storage: diskStorage({
           destination: './uploads',
           filename: (req, file, callback) => {
@@ -22,10 +23,17 @@ import { Upload } from './entities/upload.entity';
             callback(null, uniqueName);
           },
         }),
-        fileFilter: (req, file, callback) => {
+        fileFilter: async (req, file, callback) => {
+          const invalidFileMessage = await i18n.translate(
+            'upload.INVALID_TYPE',
+            {
+              lang: req.headers['accept-language'] || 'vi',
+            },
+          );
+
           if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
             return callback(
-              new BadRequestException('Only image files are allowed!'),
+              new BadRequestException(invalidFileMessage),
               false,
             ); // Lỗi 400 khi file không hợp lệ
           }
@@ -35,7 +43,7 @@ import { Upload } from './entities/upload.entity';
           fileSize: 5 * 1024 * 1024, // 5MB
         },
       }),
-      inject: [ConfigService],
+      inject: [I18nService],
     }),
   ],
   controllers: [UploadController],

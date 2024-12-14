@@ -4,8 +4,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { CommonModule } from './common/common.module';
-import jwtConfig from './common/config/jwt.config';
 import { UploadModule } from './upload/upload.module';
+import { TranslationModule } from './i18n/i18n.module';
+import jwtConfig from './common/config/jwt.config';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { UploadModule } from './upload/upload.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
+    TranslationModule,
     UsersModule,
     AuthModule,
     CommonModule,

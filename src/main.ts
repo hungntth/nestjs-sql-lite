@@ -1,18 +1,21 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+import { I18nValidationPipe } from 'nestjs-i18n';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Global validation pipe
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      transform: true,
-    }),
-  );
+  // Global validation pipe with i18n support
+  app.useGlobalPipes(new I18nValidationPipe());
+
+  // Global exception filter for i18n error messages
+  app.useGlobalFilters(new HttpExceptionFilter());
+
+  // Global interceptor for response transformation
+  app.useGlobalInterceptors(new TransformInterceptor());
 
   // Swagger documentation setup
   const config = new DocumentBuilder()

@@ -1,0 +1,6 @@
+{
+  "SUCCESS": "Tải tệp lên thành công",
+  "FAILED": "Tải tệp lên thất bại",
+  "INVALID_TYPE": "Loại tệp không hợp lệ",
+  "FILE_TOO_LARGE": "Kích thước tệp vượt quá giới hạn"
+}

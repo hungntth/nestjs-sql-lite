@@ -1,0 +1,6 @@
+{
+  "SUCCESS": "File uploaded successfully",
+  "FAILED": "File upload failed",
+  "INVALID_TYPE": "Invalid file type",
+  "FILE_TOO_LARGE": "File size exceeds limit"
+}
