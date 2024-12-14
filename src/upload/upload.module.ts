@@ -17,7 +17,7 @@ import { I18nService } from 'nestjs-i18n';
       imports: [ConfigModule],
       useFactory: async (i18n: I18nService) => ({
         storage: diskStorage({
-          destination: './uploads',
+          destination: './uploads/images',
           filename: (req, file, callback) => {
             const uniqueName = `${uuidv4()}${extname(file.originalname)}`;
             callback(null, uniqueName);
