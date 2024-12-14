@@ -41,7 +41,7 @@ export class UploadService {
 
   async remove(id: number) {
     const upload = await this.findOne(id);
-    
+
     // Delete file from filesystem
     try {
       fs.unlinkSync(upload.path);

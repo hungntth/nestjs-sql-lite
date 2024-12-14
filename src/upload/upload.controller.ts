@@ -47,7 +47,7 @@ export class UploadController {
   })
   @ApiResponse({
     status: 201,
-    description: 'Image uploaded successfully', 
+    description: 'Image uploaded successfully',
     type: UploadResponseDto,
   })
   @UseInterceptors(FileInterceptor('file'))

@@ -32,10 +32,7 @@ import { I18nService } from 'nestjs-i18n';
           );
 
           if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
-            return callback(
-              new BadRequestException(invalidFileMessage),
-              false,
-            ); // Lỗi 400 khi file không hợp lệ
+            return callback(new BadRequestException(invalidFileMessage), false); // Lỗi 400 khi file không hợp lệ
           }
           callback(null, true);
         },
