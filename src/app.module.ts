@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { CommonModule } from './common/common.module';
 import jwtConfig from './common/config/jwt.config';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import jwtConfig from './common/config/jwt.config';
     UsersModule,
     AuthModule,
     CommonModule,
+    UploadModule,
   ],
 })
 export class AppModule {}
