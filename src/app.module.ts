@@ -9,6 +9,7 @@ import { TranslationModule } from './i18n/i18n.module';
 import jwtConfig from './common/config/jwt.config';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     AuthModule,
     CommonModule,
     UploadModule,
+    CategoriesModule,
   ],
 })
 export class AppModule {}
