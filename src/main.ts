@@ -8,6 +8,13 @@ import { I18nValidationPipe } from './common/pipes/i18n-validation.pipe';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors({
+    origin: '*', // Cho phép tất cả các miền truy cập
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: '*',
+    credentials: true,
+  });
+
   const i18nService: any = app.get(I18nService);
 
   // Global validation pipe with i18n support

@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   Patch,
   Post,
@@ -15,6 +16,7 @@ import { Category } from './entities/category.entity';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/common/guards/roles.guard';
 import { Roles } from 'src/common/decorators/roles.decorator';
+import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('categories')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -27,7 +29,9 @@ export class CategoriesController {
     return this.categoriesService.create(createCategoryDto);
   }
 
-  @Get('search')
+  @Post('search')
+  @HttpCode(200)
+  @ApiResponse({ status: 200 })
   async findAll(
     @Body() body: { page: number; pageSize: number; name: string },
   ): Promise<{ items: Category[]; totalItems: number }> {
